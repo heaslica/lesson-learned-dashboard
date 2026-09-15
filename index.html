@@ -412,6 +412,8 @@
 
                         // Parse the sheet data (pass columns too so we can map columnId to index)
                         dashboardData = parseSheetData(sheetData.rows || [], sheetData.columns || []);
+                        console.log('Parsed dashboard data:', dashboardData);
+                        console.log('Number of rows received:', (sheetData.rows || []).length);
                     } catch (error) {
                         console.warn('Could not fetch from backend:', error.message);
                         console.log('Falling back to demo data...');
