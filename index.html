@@ -367,7 +367,7 @@
         (async () => {
             try {
                 // Check if we need to prompt for API token
-                if (!CONFIG.SMARTSHEET_TOKEN && !CONFIG.USE_DEMO_DATA) {
+                if (!CONFIG.SMARTSHEET_TOKEN && CONFIG.USE_DEMO_DATA) {
                     const token = prompt('Enter your Smartsheet API token (get from Smartsheet account settings):');
                     if (token) {
                         localStorage.setItem('smartsheet_token', token);
