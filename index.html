@@ -517,7 +517,7 @@
 
             return {
                 metrics: { open, closedThisMonth, pastDue, blocked, stale, cycleTime },
-                trend: { months: months.map(m => m.split('-')[1]), submitted, closed: closedByMonth },
+                trend: { months: months.map(m => m.split('-')[1]), opened: submitted, closed: closedByMonth },
                 exceptions: exceptions.map(e => ({
                     id: e.id,
                     title: e.title,
