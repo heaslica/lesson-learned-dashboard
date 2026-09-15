@@ -390,17 +390,21 @@
 
                 if (CONFIG.SMARTSHEET_TOKEN && !CONFIG.USE_DEMO_DATA) {
                     try {
-                        console.log('Fetching data from Smartsheet API...');
-                        // Call Smartsheet REST API directly
-                        const response = await fetch(`https://api.smartsheet.com/2.0/sheets/${CONFIG.SHEET_ID}`, {
+                        console.log('Fetching data from backend proxy...');
+                        // Call backend proxy (avoids CORS issues)
+                        const response = await fetch('https://lesson-learned-dashboard-backend.vercel.app/api/sheets', {
+                            method: 'POST',
                             headers: {
-                                'Authorization': `Bearer ${CONFIG.SMARTSHEET_TOKEN}`,
                                 'Content-Type': 'application/json'
-                            }
+                            },
+                            body: JSON.stringify({
+                                token: CONFIG.SMARTSHEET_TOKEN,
+                                sheetId: CONFIG.SHEET_ID
+                            })
                         });
 
                         if (!response.ok) {
-                            throw new Error(`Smartsheet API error: ${response.status} ${response.statusText}`);
+                            throw new Error(`Backend error: ${response.status} ${response.statusText}`);
                         }
 
                         const sheetData = await response.json();
@@ -409,7 +413,7 @@
                         // Parse the sheet data
                         dashboardData = parseSheetData(sheetData.rows || []);
                     } catch (error) {
-                        console.warn('Could not fetch from Smartsheet API:', error.message);
+                        console.warn('Could not fetch from backend:', error.message);
                         console.log('Falling back to demo data...');
                         loadDemoData();
                     }
